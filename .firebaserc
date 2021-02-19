@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pelis-app-5a1f0": {
+      "hosting": {
+        "app": [
+          "pelis-app-5a1f0"
+        ]
+      }
+    }
+  }
+}
