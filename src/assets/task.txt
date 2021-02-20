@@ -1,0 +1,2 @@
+ ̶q̶u̶e̶ ̶s̶e̶ ̶v̶a̶c̶i̶e̶ ̶e̶l̶ ̶f̶o̶r̶m̶u̶l̶a̶r̶i̶o̶ ̶a̶l̶ ̶e̶n̶v̶i̶a̶r̶ ̶u̶n̶ ̶l̶o̶g̶ ̶c̶o̶r̶r̶e̶c̶t̶o̶
+Crear un utils para errores de la api
