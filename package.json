@@ -20,14 +20,20 @@
     "@angular/platform-browser": "~11.2.0",
     "@angular/platform-browser-dynamic": "~11.2.0",
     "@angular/router": "~11.2.0",
+    "@capacitor/android": "^2.4.6",
     "@capacitor/core": "2.4.6",
+    "@ionic-native/camera": "^5.31.1",
+    "@ionic-native/core": "^5.31.1",
     "@ionic/angular": "^5.5.2",
+    "@ionic/storage": "^2.3.1",
+    "cordova-android": "9.0.0",
     "firebase": "^8.2.8",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
+    "@angular-devkit/architect": ">= 0.900 < 0.1200",
     "@angular-devkit/build-angular": "~0.1101.4",
     "@angular/cli": "~11.1.4",
     "@angular/compiler": "~11.2.0",
@@ -39,6 +45,18 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
+    "cordova-plugin-camera": "^5.0.1",
+    "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-ionic-keyboard": "^2.2.0",
+    "cordova-plugin-ionic-webview": "^4.2.1",
+    "cordova-plugin-splashscreen": "^5.0.2",
+    "cordova-plugin-statusbar": "^2.4.2",
+    "cordova-plugin-whitelist": "^1.3.3",
+    "cordova-sqlite-storage": "^5.1.0",
+    "firebase-tools": "^8.0.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.2.0",
@@ -47,16 +65,28 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "open": "^7.0.3",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2",
-    "@angular-devkit/architect": ">= 0.900 < 0.1200",
-    "firebase-tools": "^8.0.0",
-    "fuzzy": "^0.1.3",
-    "inquirer": "^6.2.2",
-    "inquirer-autocomplete-prompt": "^1.0.1",
-    "open": "^7.0.3"
+    "typescript": "~4.0.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-camera": {},
+      "cordova-sqlite-storage": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  }
 }

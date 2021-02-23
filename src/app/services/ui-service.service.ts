@@ -26,6 +26,9 @@ export class UiServiceService {
       case "auth/email-already-in-use":
         this.presentToast("El email ya esta en uso.","danger");
         break;
+      case "auth/user-not-found":
+        this.presentToast("Verifique sus datos porfavor","danger");
+        break;
       default:
         this.presentToast("Error del servidor, inténtelo más tarder.","danger");
         break;

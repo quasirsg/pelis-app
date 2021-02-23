@@ -8,29 +8,56 @@ import {
 } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { IonSlides } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { UiServiceService } from './ui-service.service';
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   public user$: Observable<User>;
-
+  public userr$;
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
+    private navCtrl: NavController,
     private uiService: UiServiceService
   ) {
+    //Inicializar el observable buscando el usuario que se logeo en el estado del auth (fireAuth)
     this.user$ = afAuth.authState.pipe(
       switchMap((user) => {
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         }
-
+        
         return of(null);
       })
     );
+  }
+
+  //Relacionado con login
+  async login(email: string, password: string): Promise<User> {
+    try {
+      const { user } = await this.afAuth.signInWithEmailAndPassword(
+        email,
+        password
+      );
+      return user;
+    } catch (error) {
+      console.log(error);
+      
+      this.uiService.alertErrors(error.code);
+    }
+    return;
+  }
+  async logout(): Promise<void> {
+    try {
+      await this.afAuth.signOut();
+      this.navCtrl.navigateRoot('/login');
+
+    } catch (error) {
+      console.log('Error->', error);
+    }
+    return;
   }
 
   async resetPassword(email): Promise<void> {
@@ -41,6 +68,8 @@ export class AuthService {
     }
     return;
   }
+
+  //Relacionado con register
   async register(email: string, password: string, name: string): Promise<User> {
     try {
       const { user } = await this.afAuth.createUserWithEmailAndPassword(
@@ -56,19 +85,6 @@ export class AuthService {
     }
     return;
   }
-  async login(email: string, password: string): Promise<User> {
-    try {
-      const { user } = await this.afAuth.signInWithEmailAndPassword(
-        email,
-        password
-      );
-      this.updateUserData(user);
-      return user;
-    } catch (error) {
-      console.log('Error->', error);
-    }
-    return;
-  }
   async sendVerificationEmail(): Promise<void> {
     try {
       return (await this.afAuth.currentUser).sendEmailVerification();
@@ -76,19 +92,6 @@ export class AuthService {
       console.log('Error->', error);
     }
   }
-
-  isEmailVerified(user: User): boolean {
-    return user.emailVerified === true ? true : false;
-  }
-  async logout(): Promise<void> {
-    try {
-      await this.afAuth.signOut();
-    } catch (error) {
-      console.log('Error->', error);
-    }
-    return;
-  }
-
   async changeUsername(name: string) {
     try {
       return (await this.afAuth.currentUser).updateProfile({
@@ -98,19 +101,8 @@ export class AuthService {
       console.log('Error->', error);
     }
   }
-
-  private updateUserData(user: User) {
-    const userRef: AngularFirestoreDocument<User> = this.afs.doc(
-      `users/${user.uid}`
-    );
-
-    const data: User = {
-      uid: user.uid,
-      email: user.email,
-      emailVerified: user.emailVerified,
-      displayName: user.displayName,
-    };
-
-    return userRef.set(data, { merge: true });
+  //Validaciones
+  isEmailVerified(user: User): boolean {
+    return user.emailVerified === true ? true : false;
   }
 }

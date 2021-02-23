@@ -5,18 +5,15 @@
 }
 
 img {
-  width: 120px;
-}
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
 
-.pick-avatar {
-  width: 80px;
-  opacity: 0.3;
 }
 
 .pick-avatar-seleccionado {
- 
   opacity: 1 !important;
 }
-.error-message{
+.error-message {
   color: var(--ion-color-danger);
 }

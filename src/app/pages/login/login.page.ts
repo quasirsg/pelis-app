@@ -4,6 +4,7 @@ import { IonSlides, NavController } from '@ionic/angular';
 
 import { AuthService } from '../../services/auth.service';
 import { UiServiceService } from '../../services/ui-service.service';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-login',
@@ -12,44 +13,9 @@ import { UiServiceService } from '../../services/ui-service.service';
 })
 export class LoginPage implements OnInit {
   @ViewChild('slidePrincipal', { static: true }) slides: IonSlides;
-  avatars = [
-    {
-      img: 'av-1.png',
-      seleccionado: true,
-    },
-    {
-      img: 'av-2.png',
-      seleccionado: false,
-    },
-    {
-      img: 'av-3.png',
-      seleccionado: false,
-    },
-    {
-      img: 'av-4.png',
-      seleccionado: false,
-    },
-    {
-      img: 'av-5.png',
-      seleccionado: false,
-    },
-    {
-      img: 'av-6.png',
-      seleccionado: false,
-    },
-    {
-      img: 'av-7.png',
-      seleccionado: false,
-    },
-    {
-      img: 'av-8.png',
-      seleccionado: false,
-    },
-  ];
+  image: any;
+  imgUrl: any = 'assets/avatars/av-1.png';
 
-  avatarSlide = {
-    sliedesPerView: 3.5,
-  };
   //Reactive form validators
   public errorMessages = {
     name: [
@@ -92,14 +58,28 @@ export class LoginPage implements OnInit {
     ],
   });
 
+  loginForm = this.formBuilder.group({
+    emailP: [
+      '',
+      [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
+      ],
+    ],
+    passwordP: ['', [Validators.required]],
+  });
+
   constructor(
     private authSvc: AuthService,
     private navCtrl: NavController,
     private uiService: UiServiceService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private photoService: PhotoService
   ) {}
 
   //Getters
+
+  //Register
   get name() {
     return this.registrationForm.get('name');
   }
@@ -112,18 +92,41 @@ export class LoginPage implements OnInit {
     return this.registrationForm.get('password');
   }
 
-  ngOnInit() {}
+  //Login
+  get emailP() {
+    return this.loginForm.get('emailP');
+  }
 
-  // login(fLogin: NgForm) {
-  //   console.log(fLogin.valid);
-  // }
+  get passwordP() {
+    return this.loginForm.get('passwordP');
+  }
+
+  ngOnInit() {
+    //Observable
+    // this.authSvc.user$.subscribe((user) => {
+    //   if (user) {
+    //     this.navCtrl.navigateRoot("/home");
+    //   }
+    // });
+    this.slides.lockSwipes(true);
+
+    this.photoService.imageCast.subscribe((data) => {
+      this.image = data;
+    });
+  }
+
+  async login() {
+    const { emailP, passwordP } = this.loginForm.value;
+    const user = await this.authSvc.login(emailP, passwordP);
+    if (user && user.emailVerified) {
+      this.navCtrl.navigateRoot('/home');
+    }
+  }
   async register() {
     const { email, password, name } = this.registrationForm.value;
     const user = await this.authSvc.register(email, password, name);
     if (user) {
       console.log(user);
-      // Todo: verificado
-      this.registrationForm.reset();
       await this.mostrarLogin();
       this.uiService.presentToast(
         'Verifique su correo electronico!! (Verifique en spam)',
@@ -132,19 +135,23 @@ export class LoginPage implements OnInit {
     }
   }
 
-  seleccionarAvatar(avatar) {
-    this.avatars.forEach((av) => (av.seleccionado = false));
-    avatar.seleccionado = true;
-  }
-
   mostrarRegistro() {
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
+    this.registrationForm.reset();
+    this.loginForm.reset();
+
     this.slides.lockSwipes(true);
   }
   mostrarLogin() {
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
+    this.registrationForm.reset();
+    this.loginForm.reset();
     this.slides.lockSwipes(true);
+  }
+
+  addPhotoToGallery() {
+    this.photoService.addNewToGallery();
   }
 }
