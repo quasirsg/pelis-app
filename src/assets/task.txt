@@ -1,6 +1,9 @@
  ̶q̶u̶e̶ ̶s̶e̶ ̶v̶a̶c̶i̶e̶ ̶e̶l̶ ̶f̶o̶r̶m̶u̶l̶a̶r̶i̶o̶ ̶a̶l̶ ̶e̶n̶v̶i̶a̶r̶ ̶u̶n̶ ̶l̶o̶g̶ ̶c̶o̶r̶r̶e̶c̶t̶o̶
  ̶C̶r̶e̶a̶r̶ ̶u̶n̶ ̶u̶t̶i̶l̶s̶ ̶p̶a̶r̶a̶ ̶e̶r̶r̶o̶r̶e̶s̶ ̶d̶e̶ ̶l̶a̶ ̶a̶p̶i̶
  ̶e̶v̶i̶t̶a̶r̶ ̶q̶u̶e̶ ̶e̶l̶ ̶u̶s̶u̶a̶r̶i̶o̶ ̶p̶u̶e̶d̶a̶ ̶e̶n̶t̶r̶a̶r̶ ̶a̶ ̶h̶o̶m̶e̶ ̶s̶i̶ ̶n̶o̶ ̶e̶s̶t̶a̶ ̶l̶o̶g̶e̶a̶d̶o̶ ̶y̶ ̶v̶i̶c̶e̶v̶e̶r̶s̶a̶ 
- destruir las subcripciones en el componente login
- Agregar una pantalla de carga al momento de logearse y registrarse
- Recuperar contraseñas
+ ̶ ̶A̶g̶r̶e̶g̶a̶r̶ ̶u̶n̶a̶ ̶p̶a̶n̶t̶a̶l̶l̶a̶ ̶d̶e̶ ̶c̶a̶r̶g̶a̶ ̶a̶l̶ ̶m̶o̶m̶e̶n̶t̶o̶ ̶d̶e̶ ̶l̶o̶g̶e̶a̶r̶s̶e̶ ̶y̶ ̶r̶e̶g̶i̶s̶t̶r̶a̶r̶s̶e̶
+̶ ̶R̶e̶c̶u̶p̶e̶r̶a̶r̶ ̶c̶o̶n̶t̶r̶a̶s̶e̶ñ̶a̶s̶
+
+
+ojo para visualizar contraseña
+boton para agregar peliculas que despliegue un formulario en un modal

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { ModalController } from '@ionic/angular';
+import { AddMovieComponent } from '../../components/add-movie/add-movie.component';
 
 @Component({
   selector: 'app-home',
@@ -8,10 +9,13 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomePage {
 
-  constructor(private authSvc: AuthService) {}
+  constructor(public modalController: ModalController) {}
 
-  onClick(){
-    this.authSvc.logout();
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: AddMovieComponent,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
   }
-
 }
