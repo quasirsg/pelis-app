@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AddMovieComponent } from '../../components/add-movie/add-movie.component';
+import { AddMoviePage } from '../add-movie/add-movie.page';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ export class HomePage {
 
   async presentModal() {
     const modal = await this.modalController.create({
-      component: AddMovieComponent,
+      component: AddMoviePage,
       cssClass: 'my-custom-class'
     });
     return await modal.present();

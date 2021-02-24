@@ -1,0 +1,53 @@
+<ion-content class="ion-padding">
+  <form (ngSubmit)="addMovie()" [formGroup]="movieForm">
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <!--  -->
+          <ion-item>
+            <ion-label>Titulo</ion-label>
+            <ion-input formControlName="name" inputmode="text" type="text"></ion-input>
+          </ion-item>
+          <div *ngFor="let error of errorMessages.name">
+            <ng-container *ngIf="name.hasError(error.type) && (name.dirty || name.touched)">
+              <small class="error-message">{{ error.message }}</small>
+            </ng-container>
+          </div>
+          <!--  -->
+          <ion-item>
+            <ion-label>Descripcion</ion-label>
+            <ion-input formControlName="description" inputmode="text" type="text"></ion-input>
+          </ion-item>
+          <div *ngFor="let error of errorMessages.description">
+            <ng-container *ngIf="description.hasError(error.type) && (description.dirty || description.touched)">
+              <small class="error-message">{{ error.message }}</small>
+            </ng-container>
+          </div>
+          <!--  -->
+          <ion-item>
+            <ion-label>Imagen</ion-label>
+            <ion-input formControlName="image" type="file" accept="image/*" (change)="handleFileInput($event.target.files)">
+            </ion-input>
+          </ion-item>
+          <div *ngFor="let error of errorMessages.image">
+            <ng-container *ngIf="
+            image.hasError(error.type) &&
+                (image.dirty || image.touched)
+              ">
+              <small class="error-message">{{ error.message }}</small>
+            </ng-container>
+          </div>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button [disabled]="!movieForm.valid" type="submit" color="tertiary" shape="round">
+          Crear usuario
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>
