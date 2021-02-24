@@ -5,18 +5,12 @@
         <ion-grid fixed>
           <ion-row>
             <ion-col>
-
-              <ion-fab vertical="center" horizontal="center" *ngIf="!image">
+              <ion-fab vertical="center" horizontal="center" *ngIf="!image && fabSlide" class="ion-margin-bottom">
                 <ion-fab-button (click)="addPhotoToGallery()">
                   <ion-icon name="camera"></ion-icon>
                 </ion-fab-button>
               </ion-fab>
-            
-                <img
-                  [src]="image"
-                  (click)="addPhotoToGallery()"
-                  *ngIf="image"
-                />
+              <img [src]="image" (click)="addPhotoToGallery()" *ngIf="image && fabSlide" />
             </ion-col>
           </ion-row>
 
@@ -25,33 +19,20 @@
               <ion-list>
                 <ion-item>
                   <ion-label>Email</ion-label>
-                  <ion-input
-                    type="email"
-                    formControlName="emailP"
-                    required
-                  ></ion-input>
+                  <ion-input type="email" formControlName="emailP" required></ion-input>
                 </ion-item>
-
                 <div *ngFor="let error of errorMessages.email">
-                  <ng-container
-                    *ngIf="emailP.hasError(error.type) && (emailP.dirty || emailP.touched)"
-                  >
+                  <ng-container *ngIf="emailP.hasError(error.type) && (emailP.dirty || emailP.touched)">
                     <small class="error-message">{{error.message}}</small>
                   </ng-container>
                 </div>
 
                 <ion-item>
                   <ion-label>Password</ion-label>
-                  <ion-input
-                    type="password"
-                    formControlName="passwordP"
-                    required
-                  ></ion-input>
+                  <ion-input type="password" formControlName="passwordP" required></ion-input>
                 </ion-item>
                 <div *ngFor="let error of errorMessages.password">
-                  <ng-container
-                    *ngIf="passwordP.hasError(error.type) && (passwordP.dirty || passwordP.touched)"
-                  >
+                  <ng-container *ngIf="passwordP.hasError(error.type) && (passwordP.dirty || passwordP.touched)">
                     <small class="error-message">{{error.message}}</small>
                   </ng-container>
                 </div>
@@ -61,14 +42,18 @@
 
           <ion-row>
             <ion-col>
-              <ion-button
-                [disabled]="!loginForm.valid"
-                type="submit"
-                color="tertiary"
-                shape="round"
-              >
+              <ion-button [disabled]="!loginForm.valid" type="submit" color="tertiary" shape="round">
                 Login
               </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-text color="dark" *ngIf="resetPass">
+                <h5>¿Olvidaste tu contraseña? <a color="primary" (click)="resetPassword()">Recuperar contraseña</a>
+                </h5>
+              </ion-text>
+
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -77,74 +62,34 @@
 
     <ion-slide>
       <ion-grid fixed>
-        <ion-row>
-          <ion-col>
-            <h3>Seleccione Avatar</h3>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-slides [options]="avatarSlide">
-              <ion-slide *ngFor="let avatar of avatars">
-                <ion-img
-                  class="pick-avatar"
-                  src="/assets/avatars/{{avatar.img}}"
-                  [ngClass]="{'pick-avatar-seleccionado':avatar.seleccionado}"
-                  (click)="seleccionarAvatar(avatar)"
-                >
-                </ion-img>
-              </ion-slide>
-            </ion-slides>
-          </ion-col>
-        </ion-row>
-
         <form (ngSubmit)="register()" [formGroup]="registrationForm">
           <ion-row>
             <ion-col>
               <ion-list>
                 <ion-item>
                   <ion-label>Email</ion-label>
-                  <ion-input
-                    formControlName="email"
-                    inputmode="email"
-                    type="email"
-                  ></ion-input>
+                  <ion-input formControlName="email" inputmode="email" type="email"></ion-input>
                 </ion-item>
                 <div *ngFor="let error of errorMessages.email">
-                  <ng-container
-                    *ngIf="email.hasError(error.type) && (email.dirty || email.touched)"
-                  >
+                  <ng-container *ngIf="email.hasError(error.type) && (email.dirty || email.touched)">
                     <small class="error-message">{{error.message}}</small>
                   </ng-container>
                 </div>
                 <ion-item>
                   <ion-label>Nombre</ion-label>
-                  <ion-input
-                    formControlName="name"
-                    inputmode="text"
-                    type="text"
-                  ></ion-input>
+                  <ion-input formControlName="name" inputmode="text" type="text"></ion-input>
                 </ion-item>
                 <div *ngFor="let error of errorMessages.name">
-                  <ng-container
-                    *ngIf="name.hasError(error.type) && (name.dirty || name.touched)"
-                  >
+                  <ng-container *ngIf="name.hasError(error.type) && (name.dirty || name.touched)">
                     <small class="error-message">{{error.message}}</small>
                   </ng-container>
                 </div>
                 <ion-item>
                   <ion-label>Password</ion-label>
-                  <ion-input
-                    formControlName="password"
-                    inputmode="text"
-                    type="password"
-                  ></ion-input>
+                  <ion-input formControlName="password" inputmode="text" type="password"></ion-input>
                 </ion-item>
                 <div *ngFor="let error of errorMessages.password">
-                  <ng-container
-                    *ngIf="password.hasError(error.type) && (password.dirty || password.touched)"
-                  >
+                  <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
                     <small class="error-message">{{error.message}}</small>
                   </ng-container>
                 </div>
@@ -154,12 +99,7 @@
 
           <ion-row>
             <ion-col>
-              <ion-button
-                [disabled]="!registrationForm.valid"
-                type="submit"
-                color="tertiary"
-                shape="round"
-              >
+              <ion-button [disabled]="!registrationForm.valid" type="submit" color="tertiary" shape="round">
                 Crear usuario
               </ion-button>
             </ion-col>
@@ -174,27 +114,14 @@
   <ion-toolbar>
     <ion-row>
       <ion-col>
-        <ion-button
-          shape="round"
-          expand="full"
-          size="small"
-          fill="outline"
-          color="tertiary"
-          (click)="mostrarLogin()"
-        >
+        <ion-button shape="round" expand="full" size="small" fill="outline" color="tertiary" (click)="mostrarLogin()">
           Ingresar
         </ion-button>
       </ion-col>
 
       <ion-col>
-        <ion-button
-          shape="round"
-          expand="full"
-          size="small"
-          fill="outline"
-          color="tertiary"
-          (click)="mostrarRegistro()"
-        >
+        <ion-button shape="round" expand="full" size="small" fill="outline" color="tertiary"
+          (click)="mostrarRegistro()">
           Registrarme
         </ion-button>
       </ion-col>

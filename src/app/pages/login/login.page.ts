@@ -15,7 +15,8 @@ export class LoginPage implements OnInit {
   @ViewChild('slidePrincipal', { static: true }) slides: IonSlides;
   image: any;
   imgUrl: any = 'assets/avatars/av-1.png';
-
+  fabSlide: boolean = true;
+  resetPass: boolean = false;
   //Reactive form validators
   public errorMessages = {
     name: [
@@ -77,6 +78,15 @@ export class LoginPage implements OnInit {
     private photoService: PhotoService
   ) {}
 
+  ngOnInit() {
+    this.slides.lockSwipes(true);
+    //Observable
+    this.photoService.imageCast.subscribe((data) => {
+      this.image = data;
+    });
+    //Pedir storage de photo
+    this.photoService.loadSaved();
+  }
   //Getters
 
   //Register
@@ -100,33 +110,28 @@ export class LoginPage implements OnInit {
   get passwordP() {
     return this.loginForm.get('passwordP');
   }
-
-  ngOnInit() {
-    //Observable
-    // this.authSvc.user$.subscribe((user) => {
-    //   if (user) {
-    //     this.navCtrl.navigateRoot("/home");
-    //   }
-    // });
-    this.slides.lockSwipes(true);
-
-    this.photoService.imageCast.subscribe((data) => {
-      this.image = data;
-    });
-  }
-
+  //
   async login() {
     const { emailP, passwordP } = this.loginForm.value;
     const user = await this.authSvc.login(emailP, passwordP);
     if (user && user.emailVerified) {
       this.navCtrl.navigateRoot('/home');
+    } else {
+      this.resetPass = true;
     }
   }
+  //
+  resetPassword = () => {
+    const { emailP } = this.loginForm.value;
+
+    this.uiService.confirmResetPassword(()=>this.authSvc.resetPassword(emailP));
+  };
+  //
   async register() {
     const { email, password, name } = this.registrationForm.value;
     const user = await this.authSvc.register(email, password, name);
     if (user) {
-      console.log(user);
+      this.registrationForm.reset();
       await this.mostrarLogin();
       this.uiService.presentToast(
         'Verifique su correo electronico!! (Verifique en spam)',
@@ -134,24 +139,23 @@ export class LoginPage implements OnInit {
       );
     }
   }
-
+  //
   mostrarRegistro() {
+    this.fabSlide = false;
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
-    this.registrationForm.reset();
-    this.loginForm.reset();
-
     this.slides.lockSwipes(true);
   }
   mostrarLogin() {
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
-    this.registrationForm.reset();
-    this.loginForm.reset();
     this.slides.lockSwipes(true);
+    setTimeout(() => {
+      this.fabSlide = true;
+    }, 1200);
   }
-
   addPhotoToGallery() {
-    this.photoService.addNewToGallery();
+    this.photoService.takePicture();
+    this.photoService.loadSaved();
   }
 }

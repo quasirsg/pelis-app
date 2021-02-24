@@ -16,6 +16,7 @@ import { UiServiceService } from './ui-service.service';
 export class AuthService {
   public user$: Observable<User>;
   public userr$;
+
   constructor(
     private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
@@ -28,7 +29,7 @@ export class AuthService {
         if (user) {
           return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         }
-        
+
         return of(null);
       })
     );
@@ -37,14 +38,17 @@ export class AuthService {
   //Relacionado con login
   async login(email: string, password: string): Promise<User> {
     try {
+      this.uiService.presentLoading();
       const { user } = await this.afAuth.signInWithEmailAndPassword(
         email,
         password
       );
+      this.uiService.loading.dismiss();
       return user;
     } catch (error) {
       console.log(error);
-      
+      this.uiService.loading.dismiss();
+
       this.uiService.alertErrors(error.code);
     }
     return;
@@ -53,29 +57,40 @@ export class AuthService {
     try {
       await this.afAuth.signOut();
       this.navCtrl.navigateRoot('/login');
-
     } catch (error) {
       console.log('Error->', error);
     }
     return;
   }
 
-  async resetPassword(email): Promise<void> {
+  resetPassword = async (email): Promise<void> => {
     try {
-      return this.afAuth.sendPasswordResetEmail(email);
+      this.uiService.presentLoading();
+      await this.afAuth.sendPasswordResetEmail(email);
+      this.uiService.loading.dismiss();
+
+      this.uiService.presentToast(
+        'Contraseña restablecida!! (Verifique en spam)',
+        'success'
+      );
     } catch (error) {
-      console.log('Error->', error);
+      this.uiService.loading.dismiss();
+      this.uiService.alertErrors(error.code);
     }
     return;
-  }
+  };
 
   //Relacionado con register
   async register(email: string, password: string, name: string): Promise<User> {
     try {
+      this.uiService.presentLoading();
+
       const { user } = await this.afAuth.createUserWithEmailAndPassword(
         email,
         password
       );
+      this.uiService.loading.dismiss();
+
       await this.changeUsername(name);
       await this.sendVerificationEmail();
 
