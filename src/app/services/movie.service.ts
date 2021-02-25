@@ -9,6 +9,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import * as uuid from 'uuid';
 import { Observable } from 'rxjs';
 import { Movie } from '../interfaces/movie';
+import { Rating } from '../interfaces/rating';
+import { tap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +18,11 @@ import { Movie } from '../interfaces/movie';
 export class MovieService {
   movieCollection: AngularFirestoreCollection<Movie>;
   movieImageCollection: AngularFirestoreCollection<string>;
+  ratingCollection: AngularFirestoreCollection<string>;
 
   movies: Observable<Movie[]>;
   movieImage: Observable<string>;
+  rating: Observable<any>;
 
   constructor(
     private afs: AngularFirestore,
@@ -51,16 +55,29 @@ export class MovieService {
         this.uiService.presentToast('Error al crear la pelicula', 'danger');
       });
   }
-
-  private uploadImage(file: any, fileName: any) {
-    const ref = this.afStorage.ref('artist').child(fileName);
-    return ref.put(file);
-  }
   async getMovieImage(id) {
-    this.movieImage = await this.afStorage.ref(`artist/${id}`).getDownloadURL();
+    this.movieImage = await this.afStorage.ref(`movies/${id}`).getDownloadURL();
     return this.movieImage;
   }
+  async addRating(record:number,uid:string){
+    this.afs.collection('ratings').doc(uid).set({
+      record,
+    }).then(()=>console.log(uid)).catch(console.log);
+  }
+  async getRating(uid) {
+    this.rating = this.afs.collection('ratings/').doc(uid).valueChanges();
+    return this.rating;
+  }
+  private uploadImage(file: any, fileName: any) {
+    const ref = this.afStorage.ref('movies').child(fileName);
+    return ref.put(file);
+  }
+
   getMovies() {
     return this.movies;
+  }
+
+  getRecords(){
+    return this.rating;
   }
 }

@@ -4,6 +4,7 @@ import { AddMoviePage } from '../add-movie/add-movie.page';
 import { MovieService } from '../../services/movie.service';
 import { Movie } from '../../interfaces/movie';
 import { UiServiceService } from 'src/app/services/ui-service.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -15,10 +16,11 @@ export class HomePage implements OnInit {
   movieImage: any;
   search: boolean = false;
   name: string = '';
+  user: any;
   constructor(
     public modalController: ModalController,
     private movieService: MovieService,
-    private uiService: UiServiceService
+    private authSvc: AuthService
   ) {}
 
   async presentModal() {
@@ -33,12 +35,20 @@ export class HomePage implements OnInit {
     this.movieService.getMovies().subscribe((movies) => {
       this.movies = movies.reverse();
     });
+    this.authSvc.user$.subscribe((user) => {
+      if (user) {
+        this.user = user.uid;
+      }
+    });
   }
-
-  onClick(){
+  
+  onClick() {
     this.search = true;
   }
-  onSearchChange(event){
+  onSearchChange(event) {
     this.name = event.detail.value;
+  }
+  onSearchCancel() {
+    this.search = false;
   }
 }

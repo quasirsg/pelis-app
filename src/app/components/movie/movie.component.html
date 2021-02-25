@@ -2,15 +2,17 @@
   <ion-grid>
     <ion-row>
       <ion-col>
-        <img [src]="url">
+        <img [src]="url" />
       </ion-col>
       <ion-col>
         <ion-item>
-          <h2>{{name}}</h2>
+          <h2>{{ name }}</h2>
         </ion-item>
         <ion-card-content>
-          <p>{{description}}</p>
+          <p>{{ description }}</p>
         </ion-card-content>
+        <rating [rate]="rateBd" readonly="false" size="small" (rateChange)="onRateChange($event)">
+        </rating>
       </ion-col>
     </ion-row>
   </ion-grid>

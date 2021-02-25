@@ -7,13 +7,13 @@
     <ion-button (click)="onClick()" slot="end" size="small" color="primary" *ngIf="!search">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
-    <ion-searchbar mode="ios" inputmode="text" *ngIf="search" (ionChange)="onSearchChange($event)" animated>
+    <ion-searchbar mode="ios" showCancelButton (ionCancel)="onSearchCancel()" inputmode="text" *ngIf="search" (ionChange)="onSearchChange($event)" animated>
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" padding>
-  <app-movie *ngFor="let item of movies | filtro:name " [photo]="item.photo" [description]="item.description" [name]="item.name">
+  <app-movie *ngFor="let item of movies | filtro:name "  [uid]="user" [photo]="item.photo" [description]="item.description" [name]="item.name">
   </app-movie>
   <!-- fab placed to the bottom end -->
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">

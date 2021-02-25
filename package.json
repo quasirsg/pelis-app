@@ -29,6 +29,7 @@
     "@rxweb/reactive-form-validators": "^2.1.2",
     "cordova-android": "9.0.0",
     "firebase": "^8.2.8",
+    "ionic4-rating": "^1.0.9",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "uuid": "^8.3.2",
