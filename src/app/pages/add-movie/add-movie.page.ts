@@ -3,6 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { ModalController, NavController } from '@ionic/angular';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { MovieService } from '../../services/movie.service';
+import { UiServiceService } from '../../services/ui-service.service';
 
 @Component({
   selector: 'app-add-movie',
@@ -51,6 +52,7 @@ export class AddMoviePage implements OnInit {
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
     private movieService: MovieService,
+    private uiService: UiServiceService
   ) {}
 
   ngOnInit() {}

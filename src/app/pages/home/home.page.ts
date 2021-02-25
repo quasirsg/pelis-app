@@ -13,7 +13,8 @@ import { UiServiceService } from 'src/app/services/ui-service.service';
 export class HomePage implements OnInit {
   movies: Movie[];
   movieImage: any;
-  
+  search: boolean = false;
+  name: string = '';
   constructor(
     public modalController: ModalController,
     private movieService: MovieService,
@@ -29,14 +30,15 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.loading();
-  }
-  async loading() {
-    await this.movieService.getMovies().subscribe((movies) => {
-      if (movies.length !== 0) {
-        this.uiService.presentLoading();
-      }
-      this.movies = movies;
+    this.movieService.getMovies().subscribe((movies) => {
+      this.movies = movies.reverse();
     });
+  }
+
+  onClick(){
+    this.search = true;
+  }
+  onSearchChange(event){
+    this.name = event.detail.value;
   }
 }

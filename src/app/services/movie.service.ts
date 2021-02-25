@@ -32,6 +32,10 @@ export class MovieService {
     //Generar un UID para referenciar la foto
     const fileName = uuid.v4();
     //Set en la collection movies (firebase)
+    this.uiService.presentLoading();
+
+    await this.uploadImage(file, fileName);
+
     this.afs
       .collection('movies')
       .add({
@@ -40,7 +44,7 @@ export class MovieService {
         photo: fileName,
       })
       .then((docRef) => {
-        this.uploadImage(file, fileName);
+        this.uiService.loading.dismiss();
         this.uiService.presentToast('Pelicula creada con exito', 'success');
       })
       .catch((error) => {
