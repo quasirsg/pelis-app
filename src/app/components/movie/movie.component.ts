@@ -48,4 +48,5 @@ export class MovieComponent implements OnInit {
     let uid = this.uid + this.photo;
     this.movieService.addRating(this.rate, uid);
   };
+  
 }

@@ -50,5 +50,6 @@ export class HomePage implements OnInit {
   }
   onSearchCancel() {
     this.search = false;
+    this.name = '';
   }
 }
