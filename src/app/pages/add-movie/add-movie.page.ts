@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
-import { file, RxwebValidators } from '@rxweb/reactive-form-validators';
+import { ModalController, NavController } from '@ionic/angular';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { MovieService } from '../../services/movie.service';
-import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-add-movie',
@@ -52,13 +51,10 @@ export class AddMoviePage implements OnInit {
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
     private movieService: MovieService,
-    private photoService: PhotoService
   ) {}
 
   ngOnInit() {}
-  salirSinArgumentos() {
-    this.modalCtrl.dismiss();
-  }
+
   //Getters
 
   // AddMovie
@@ -75,15 +71,9 @@ export class AddMoviePage implements OnInit {
 
   addMovie() {
     const { name, description } = this.movieForm.value;
-    this.movieService.addMovie(name, description,this.fileToUpload);
+    this.movieService.addMovie(name, description, this.fileToUpload);
+    this.modalCtrl.dismiss();
     this.movieForm.reset();
-  }
-
-  salirConArgumentos() {
-    this.modalCtrl.dismiss({
-      nombre: 'Felipe',
-      pais: 'España',
-    });
   }
 
   handleFileInput(files: FileList) {

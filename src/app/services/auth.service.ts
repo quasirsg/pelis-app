@@ -98,7 +98,6 @@ export class AuthService {
     } catch (error) {
       this.uiService.alertErrors(error.code);
       this.uiService.loading.dismiss();
-
     }
     return;
   }

@@ -6,21 +6,19 @@ import { take, map } from 'rxjs/operators';
 import { NavController } from '@ionic/angular';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class GeneralGuard implements CanLoad {
+  constructor(private authSvc: AuthService, private navCtrl: NavController) {}
 
-    constructor( private authSvc: AuthService,private navCtrl:NavController ) {}
-
-  canLoad(): Observable<boolean> | Promise<boolean> | boolean  {
-
+  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
     return this.authSvc.user$.pipe(
       take(1),
-      map((user)=>{
+      map((user) => {
         if (user) {
           this.navCtrl.navigateRoot('/home');
-          return false
-        }else{
+          return false;
+        } else {
           return true;
         }
       })

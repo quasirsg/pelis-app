@@ -124,7 +124,9 @@ export class LoginPage implements OnInit {
   resetPassword = () => {
     const { emailP } = this.loginForm.value;
 
-    this.uiService.confirmResetPassword(()=>this.authSvc.resetPassword(emailP));
+    this.uiService.confirmResetPassword(() =>
+      this.authSvc.resetPassword(emailP)
+    );
   };
   //
   async register() {
@@ -139,7 +141,7 @@ export class LoginPage implements OnInit {
       );
     }
   }
-  //
+  // Sliders
   mostrarRegistro() {
     this.fabSlide = false;
     this.slides.lockSwipes(false);
@@ -154,6 +156,7 @@ export class LoginPage implements OnInit {
       this.fabSlide = true;
     }, 1200);
   }
+  //Tomar foto y actualizar el observable
   addPhotoToGallery() {
     this.photoService.takePicture();
     this.photoService.loadSaved();

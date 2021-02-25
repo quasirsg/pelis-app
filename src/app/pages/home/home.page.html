@@ -9,7 +9,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" padding>
-  <app-movie></app-movie>
+  <app-movie *ngFor="let item of movies" [photo]="item.photo" [description]="item.description" [name]="item.name">
+  </app-movie>
   <!-- fab placed to the bottom end -->
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button color="dark" (click)="presentModal()">

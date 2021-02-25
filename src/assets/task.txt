@@ -6,4 +6,5 @@
 
 
 ojo para visualizar contraseña
-boton para agregar peliculas que despliegue un formulario en un modal
+ ̶b̶o̶t̶o̶n̶ ̶p̶a̶r̶a̶ ̶a̶g̶r̶e̶g̶a̶r̶ ̶p̶e̶l̶i̶c̶u̶l̶a̶s̶ ̶q̶u̶e̶ ̶d̶e̶s̶p̶l̶i̶e̶g̶u̶e̶ ̶u̶n̶ ̶f̶o̶r̶m̶u̶l̶a̶r̶i̶o̶ ̶e̶n̶ ̶u̶n̶ ̶m̶o̶d̶a̶l̶
+̶

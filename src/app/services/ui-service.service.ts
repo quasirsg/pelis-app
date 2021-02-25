@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ToastController, LoadingController, AlertController } from '@ionic/angular';
-import { AuthService } from './auth.service';
-
+import {
+  ToastController,
+  LoadingController,
+  AlertController,
+} from '@ionic/angular';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +13,7 @@ export class UiServiceService {
   constructor(
     private toastController: ToastController,
     private loadingController: LoadingController,
-    private alertController :AlertController
+    private alertController: AlertController
   ) {}
 
   async presentToast(message: string, color) {
@@ -49,34 +51,35 @@ export class UiServiceService {
 
   async presentLoading() {
     this.loading = await this.loadingController.create({
-      translucent:true,
-      mode:"ios",
-      cssClass:"loading"
+      translucent: true,
+      mode: 'ios',
+      cssClass: 'loading',
     });
     await this.loading.present();
   }
 
-   confirmResetPassword = async (cb : any) => {
+  confirmResetPassword = async (cb: any) => {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Restablecer password!',
-      message: 'Al presionar <strong>confirmar</strong> se le enviara un mail (verifique en spam) para restablecer su contraseña!!!',
+      message:
+        'Al presionar <strong>confirmar</strong> se le enviara un mail (verifique en spam) para restablecer su contraseña!!!',
       buttons: [
         {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {}
-        }, {
+          handler: () => {},
+        },
+        {
           text: 'Okay',
           handler: () => {
             cb();
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
-  }
-
+  };
 }

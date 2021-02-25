@@ -1,16 +1,15 @@
-<ion-card *ngFor="let item of [1,1,1,1,1,1,1]">
+<ion-card>
   <ion-grid>
     <ion-row>
       <ion-col>
-        <img src="https://material.angular.io/assets/img/examples/shiba1.jpg">
+        <img [src]="url">
       </ion-col>
       <ion-col>
         <ion-item>
-          <h2>Marty McFly</h2>
+          <h2>{{name}}</h2>
         </ion-item>
         <ion-card-content>
-          <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a
-            DeLorean?! Whoa. This is heavy.</p>
+          <p>{{description}}</p>
         </ion-card-content>
       </ion-col>
     </ion-row>
